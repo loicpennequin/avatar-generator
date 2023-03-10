@@ -1,11 +1,9 @@
 <script setup lang="ts">
 const props = defineProps<{ error?: string; isVisible: boolean }>();
-
-const isHidden = computed(() => !props.error || !props.isVisible);
 </script>
 
 <template>
-  <div class="ui-form-error" :aria-hidden="isHidden">
+  <div v-if="isVisible" class="ui-form-error">
     <Icon name="mdi-alert" />
     <span>{{ props.error }}</span>
   </div>
@@ -22,10 +20,6 @@ const isHidden = computed(() => !props.error || !props.isVisible);
     float: left;
     margin-inline-end: var(--size-2);
     padding-top: var(--size-1);
-  }
-
-  &[aria-hidden='true'] {
-    opacity: 0;
   }
 }
 </style>

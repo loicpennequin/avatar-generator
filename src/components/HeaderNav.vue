@@ -41,7 +41,8 @@ const { t } = useI18n();
 <style scoped lang="postcss">
 @import '~/styles/medias.css';
 
-ul {
+ul,
+li {
   display: flex;
   align-items: center;
 }

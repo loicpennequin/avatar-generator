@@ -76,11 +76,15 @@ export default defineNuxtConfig({
     locales: [
       {
         code: 'en',
-        file: 'en.json'
+        icon: 'circle-flags:uk',
+        file: 'en.json',
+        label: 'English'
       },
       {
         code: 'fr',
-        file: 'fr.json'
+        icon: 'circle-flags:fr',
+        file: 'fr.json',
+        label: 'Français'
       }
     ],
     lazy: {

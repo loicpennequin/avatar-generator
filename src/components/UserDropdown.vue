@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const { signOut, data: session } = await useSession();
+const avatarUrl = computed(() => `url('${session.value?.user.image}')`);
 
 const { t } = useI18n();
 
 const isOpened = ref(false);
-
-const avatarUrl = computed(() => `url('${session.value?.user.image}')`);
 </script>
 
 <template>
@@ -45,8 +44,14 @@ const avatarUrl = computed(() => `url('${session.value?.user.image}')`);
   border-radius: var(--radius-round);
   overflow: hidden;
   background-image: v-bind(avatarUrl);
-  height: var(--size-7);
+  background-size: cover;
+  height: var(--size-6);
+  padding: 0;
   aspect-ratio: 1;
+}
+
+.ui-dropdown-item {
+  width: max-content;
 }
 </style>
 

@@ -40,7 +40,7 @@ const is = computed(() => {
     tabindex="-1"
     @click="onClick"
   >
-    <Icon :name="props.icon" />
+    <Icon :name="props.icon" class="icon" />
     <div>
       <slot />
     </div>
@@ -49,7 +49,8 @@ const is = computed(() => {
 
 <style scoped lang="postcss">
 .ui-dropdown-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: var(--size-3);
   padding: var(--size-1) var(--size-3);

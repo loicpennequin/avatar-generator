@@ -9,6 +9,7 @@ type Props = {
   rightIcon?: BaseButtonProps['rightIcon'];
   isLoading?: BaseButtonProps['isLoading'];
   variant?: 'full' | 'outlined' | 'ghost' | 'light';
+  isPill?: boolean;
   to?: TypedNuxtLinkProps['to'];
 };
 
@@ -36,7 +37,7 @@ const tag = computed(() => {
     :is="tag"
     :to="props.to"
     class="ui-button-base"
-    :class="[props.size, props.variant]"
+    :class="[props.size, props.variant, props.isPill && 'pill']"
   >
     <Icon
       v-if="props.leftIcon && !props.isLoading"
@@ -70,7 +71,7 @@ const tag = computed(() => {
   gap: var(--size-2);
   font-weight: var(--font-weight-6);
   border-radius: var(--radius-2);
-  border: solid 2px transparent;
+  border: solid 1px transparent;
 
   &:disabled {
     cursor: not-allowed;
@@ -112,9 +113,7 @@ const tag = computed(() => {
     border-color: currentColor;
 
     &:hover:not(:disabled) {
-      border-color: transparent;
-      color: var(--text-on-primary);
-      background-color: var(--primary);
+      background-color: hsl(var(--primary-hsl) / 0.08);
     }
 
     &:disabled {
@@ -147,6 +146,10 @@ const tag = computed(() => {
       background-color: hsl(var(--disabled-hsl) / 0.3);
       color: var(--text-disabled);
     }
+  }
+
+  &.pill {
+    border-radius: var(--radius-pill);
   }
 
   & > .icon {

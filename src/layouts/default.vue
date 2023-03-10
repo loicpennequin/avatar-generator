@@ -8,7 +8,7 @@ const localePath = useLocalePath();
   <div class="layout">
     <header>
       <UiContainer size="xl" class="header-inner">
-        <h1><NuxtLink :to="localePath('/')">Create V3 App UI</NuxtLink></h1>
+        <h1><NuxtLink :to="localePath('/')">Avatar Generator</NuxtLink></h1>
 
         <HeaderNav />
       </UiContainer>
@@ -58,6 +58,10 @@ const localePath = useLocalePath();
 
   & h1 {
     font-size: var(--size-5);
+
+    & a {
+      text-decoration: none;
+    }
   }
 }
 </style>

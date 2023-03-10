@@ -23,7 +23,7 @@ const { handleSubmit } = useForm<FormSchema>({
   validationSchema: toFormValidator(FormSchema)
 });
 
-const onSubmit = handleSubmit(async values => {
+const onSubmit = handleSubmit((values) => {
   signIn('credentials', {
     ...values,
     callbackUrl: localePath('/')
@@ -36,56 +36,44 @@ const submitErrorMessage = computed(() => route.query.error as string);
 
 <template>
   <UiCenter>
-    <UiSurface
-      as="form"
-      @submit.prevent="onSubmit"
-      flex="~ col"
-      gap-5
-      max-w-md
-      w-full
-    >
-      <div
-        role="alert"
-        bg-red-500
-        color-white
-        p-3
-        rounded
-        v-if="submitErrorMessage"
-      >
+    <UiSurface as="form" @submit.prevent="onSubmit">
+      <div v-if="submitErrorMessage" role="alert" class="submit-error">
         {{ t(`submitErrors.${submitErrorMessage}`) }}
       </div>
 
-      <h2 text-3xl>{{ t('title') }}</h2>
+      <h2>{{ t('title') }}</h2>
       <UiFormControl
-        name="email"
         id="signin-email"
         v-slot="slotProps"
+        name="email"
         :label="t('labels.email')"
       >
         <UiInputText v-bind="slotProps" left-icon="mdi-email-outline" />
       </UiFormControl>
 
       <UiFormControl
-        name="password"
         id="signin-password"
         v-slot="slotProps"
+        name="password"
         :label="t('labels.password')"
       >
         <UiInputPassword v-bind="slotProps" left-icon="mdi:lock-outline" />
-        <UiLink :to="localePath('/')" text-sm self-start>
+        <NuxtLink :to="localePath('/')">
           {{ t('forgotPasswordLink') }}
-        </UiLink>
+        </NuxtLink>
       </UiFormControl>
 
-      <UiButton rounded="full">{{ t('buttons.submit') }}</UiButton>
+      <UiButton type="submit" is-pill>
+        {{ t('buttons.submit') }}
+      </UiButton>
 
-      <span text-center uppercase>- {{ t('or') }} -</span>
+      <span class="separator" aria-hidden="true">- {{ t('or') }} -</span>
 
       <UiButton
         type="button"
         variant="outlined"
         left-icon="logos:google-icon"
-        rounded="full"
+        is-pill
         @click="signIn('google')"
       >
         {{ t('buttons.google') }}
@@ -94,7 +82,7 @@ const submitErrorMessage = computed(() => route.query.error as string);
         type="button"
         variant="outlined"
         left-icon="ri:github-fill"
-        rounded="full"
+        is-pill
         @click="signIn('github')"
       >
         {{ t('buttons.github') }}
@@ -103,20 +91,47 @@ const submitErrorMessage = computed(() => route.query.error as string);
         type="button"
         variant="outlined"
         left-icon="carbon:logo-discord"
-        rounded="full"
+        is-pill
         @click="signIn('discord')"
       >
         {{ t('buttons.discord') }}
       </UiButton>
 
-      <Translation keypath="noAccount.text" tag="p" text-center>
+      <Translation keypath="noAccount.text" tag="p">
         <template #link>
-          <UiLink :to="localePath('/signup')">{{ t('noAccount.link') }}</UiLink>
+          <NuxtLink :to="localePath('/signup')">
+            {{ t('noAccount.link') }}
+          </NuxtLink>
         </template>
       </Translation>
     </UiSurface>
   </UiCenter>
 </template>
+
+<style scoped lang="postcss">
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--size-sm);
+  width: 100%;
+  gap: var(--size-3);
+}
+.submit-error {
+  background-color: var(--error);
+  color: white;
+  padding: var(--size-3);
+  border-radius: var(--radius-2);
+}
+
+.separator {
+  text-transform: uppercase;
+}
+
+p,
+.separator {
+  text-align: center;
+}
+</style>
 
 <i18n lang="json">
 {
