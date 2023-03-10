@@ -99,9 +99,9 @@ const submitErrorMessage = computed(() => route.query.error as string);
 
       <Translation keypath="noAccount.text" tag="p">
         <template #link>
-          <NuxtLink :to="localePath('/signup')">
+          <UiLink :to="localePath('/signup')">
             {{ t('noAccount.link') }}
-          </NuxtLink>
+          </UiLink>
         </template>
       </Translation>
     </UiSurface>

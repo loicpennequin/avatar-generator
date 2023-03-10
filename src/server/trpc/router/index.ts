@@ -1,12 +1,8 @@
-import { procedure, router } from '../trpc';
+import { router } from '../trpc';
+import { userRouter } from './user';
 
-/**
- * This is the primary router for your server.
- *
- * All routers added in /api/routers should be manually added here.
- */
 export const appRouter = router({
-  title: procedure.query(() => 'Create V3 App')
+  user: userRouter
 });
 
 export type AppRouter = typeof appRouter;

@@ -23,7 +23,7 @@ const slotProps = computed(() => ({
       </UiFormLabel>
     </slot>
     <slot v-bind="slotProps" />
-    <UiFormError :error="errorMessage" :is-visible="meta.touched" />
+    <UiFormError v-if="errorMessage && meta.touched" :error="errorMessage" />
   </fieldset>
 </template>
 

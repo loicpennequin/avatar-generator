@@ -43,7 +43,7 @@ const inputAttrs = computed(() => omit(attrs, ['class', 'style']));
 <style scoped lang="postcss">
 .ui-input-radio {
   display: flex;
-  gap: var(--size-1);
+  gap: 0.5em;
   align-items: center;
 
   &:has(input:disabled) {

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-const props = defineProps<{ error?: string; isVisible: boolean }>();
+const props = defineProps<{ error?: string }>();
 </script>
 
 <template>
-  <div v-if="isVisible" class="ui-form-error">
-    <Icon name="mdi-alert" />
-    <span>{{ props.error }}</span>
-  </div>
+  <transition appear>
+    <div class="ui-form-error">
+      <Icon name="mdi-alert" />
+      <span>{{ props.error }}</span>
+    </div>
+  </transition>
 </template>
 
 <style scoped lang="postcss">
@@ -20,6 +22,16 @@ const props = defineProps<{ error?: string; isVisible: boolean }>();
     float: left;
     margin-inline-end: var(--size-2);
     padding-top: var(--size-1);
+  }
+
+  &.v-enter-active,
+  &.v-leave-active {
+    transition: opacity 0.2s;
+  }
+
+  &.v-enter-from,
+  &.v-leave-to {
+    opacity: 0;
   }
 }
 </style>

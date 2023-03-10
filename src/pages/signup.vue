@@ -19,7 +19,7 @@ const FormSchema = z
     passwordConfirm: z.string(),
     isTosAccepted: z.boolean()
   })
-  .refine(data => data.password === data.passwordConfirm, {
+  .refine((data) => data.password === data.passwordConfirm, {
     message: t('errors.passwordMatch'),
     path: ['passwordConfirm']
   });
@@ -46,53 +46,46 @@ const { mutate: signup, error } = useMutation(
 
 const submitErrorMessage = useSubmitError(error);
 
-const onSubmit = handleSubmit(async values => {
+const onSubmit = handleSubmit((values) => {
   signup(values);
 });
 </script>
 
 <template>
   <UiCenter>
-    <UiSurface
-      as="form"
-      @submit.prevent="onSubmit"
-      flex="~ col"
-      gap-5
-      max-w-md
-      w-full
-    >
+    <UiSurface as="form" @submit.prevent="onSubmit">
       <h2 text-3xl>{{ t('title') }}</h2>
       <UiFormControl
-        name="email"
         id="signup-email"
         v-slot="slotProps"
+        name="email"
         :label="t('labels.email')"
       >
         <UiInputText v-bind="slotProps" />
       </UiFormControl>
 
       <UiFormControl
-        name="password"
         id="signup-password"
         v-slot="slotProps"
+        name="password"
         :label="t('labels.password')"
       >
         <UiInputPassword v-bind="slotProps" />
       </UiFormControl>
 
       <UiFormControl
-        name="passwordConfirm"
         id="signup-passwordConfirm"
         v-slot="slotProps"
+        name="passwordConfirm"
         :label="t('labels.passwordConfirm')"
       >
         <UiInputPassword v-bind="slotProps" />
       </UiFormControl>
 
       <UiFormControl
-        name="isTosAccepted"
         id="signup-acceptRos"
         v-slot="slotProps"
+        name="isTosAccepted"
       >
         <UiInputCheckbox v-bind="slotProps">
           {{ t('labels.acceptTos') }}
@@ -111,6 +104,16 @@ const onSubmit = handleSubmit(async values => {
     </UiSurface>
   </UiCenter>
 </template>
+
+<style scoped lang="postcss">
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--size-sm);
+  width: 100%;
+  gap: var(--size-3);
+}
+</style>
 
 <i18n lang="json">
 {

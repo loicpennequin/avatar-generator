@@ -36,13 +36,13 @@ const isLocaleDropdownOpened = ref(false);
 
     <template #menu>
       <UiDropdownItem
-        v-for="locale in availableLocales"
-        :key="locale.code"
-        :to="switchLocalePath(locale.code)"
-        :icon="locale.icon"
+        v-for="lang in availableLocales"
+        :key="lang.code"
+        :to="switchLocalePath(lang.code)"
+        :icon="lang.icon"
         class="dropdown-item"
       >
-        {{ locale.label }}
+        {{ lang.label }}
       </UiDropdownItem>
     </template>
   </UiDropdown>

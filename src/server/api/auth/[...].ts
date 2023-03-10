@@ -33,17 +33,15 @@ export default NuxtAuthHandler({
   adapter: PrismaAdapter(db),
 
   callbacks: {
-    async session({ session }) {
+    async session(arg) {
+      const { session } = arg;
       if (!session.user || !session.user.email) return session;
 
-      const user = await db.user.findUnique({
+      session.user = (await db.user.findUnique({
         where: { email: session.user.email }
-      });
+      })) as PrismaUser;
 
-      return {
-        ...session,
-        user: user!
-      };
+      return session;
     }
   },
 

@@ -47,6 +47,9 @@ li {
   align-items: center;
 }
 
+ul {
+  gap: var(--size-2);
+}
 .desktop-nav {
   @media (--md-n-below) {
     display: none;

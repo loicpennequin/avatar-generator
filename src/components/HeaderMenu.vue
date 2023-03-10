@@ -31,21 +31,21 @@ const onSignout = () => {
       <ul>
         <template v-if="!session?.user">
           <li>
-            <button
+            <NuxtLink
               :to="localePath({ name: 'signup' })"
               @click="isOpened = false"
             >
               {{ t('signup') }}
-            </button>
+            </NuxtLink>
           </li>
           <li>
-            <button
+            <NuxtLink
               variant="outlined"
               :to="localePath({ name: 'signin' })"
               @click="isOpened = false"
             >
               {{ t('signin') }}
-            </button>
+            </NuxtLink>
           </li>
         </template>
 
@@ -81,11 +81,11 @@ li {
   padding-block: var(--size-2);
 }
 
-button,
 a {
   background-color: transparent;
   color: inherit;
-  padding: 0;
+  padding: var(--size-2) 0;
+  text-decoration: none;
 }
 </style>
 
