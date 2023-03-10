@@ -9,6 +9,7 @@ watchEffect(() => {
 
 const { data: session, signOut } = await useSession();
 const { t } = useI18n();
+
 const localePath = useLocalePath();
 
 const onSignout = () => {
@@ -30,23 +31,21 @@ const onSignout = () => {
       <ul>
         <template v-if="!session?.user">
           <li>
-            <UiButton
+            <button
               :to="localePath({ name: 'signup' })"
-              class="cta"
               @click="isOpened = false"
             >
               {{ t('signup') }}
-            </UiButton>
+            </button>
           </li>
           <li>
-            <UiButton
+            <button
               variant="outlined"
               :to="localePath({ name: 'signin' })"
-              class="cta"
               @click="isOpened = false"
             >
               {{ t('signin') }}
-            </UiButton>
+            </button>
           </li>
         </template>
 
@@ -54,10 +53,14 @@ const onSignout = () => {
           <button @click="onSignout">{{ t('signoff') }}</button>
         </li>
 
-        <li class="dark-mode">
+        <li>
           {{ t('theme') }}
-
           <DarkModeToggle is-switch />
+        </li>
+
+        <li>
+          {{ t('language') }}
+          <LocaleSwitcher show-label />
         </li>
       </ul>
     </nav>
@@ -68,18 +71,21 @@ const onSignout = () => {
 ul {
   display: flex;
   flex-direction: column;
-  gap: var(--size-4);
 }
 
-.dark-mode {
+li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: solid 1px var(--border-dimmed);
+  padding-block: var(--size-2);
 }
 
-.cta {
-  width: 12rem;
-  margin-inline: auto;
+button,
+a {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
 }
 </style>
 
@@ -87,17 +93,19 @@ ul {
 {
   "en": {
     "title": "Menu",
-    "signup": "Get Started",
+    "signup": "Sign up",
     "signin": "Sign in",
     "signoff": "Sign off",
-    "theme": "Theme"
+    "theme": "Theme",
+    "language": "Language"
   },
   "fr": {
     "title": "Menu",
     "signup": "Inscription",
     "signin": "Connexion",
     "signoff": "Déconnexion",
-    "theme": "Thème"
+    "theme": "Thème",
+    "language": "Langue"
   }
 }
 </i18n>

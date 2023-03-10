@@ -1,8 +1,13 @@
 <script setup lang="ts">
+const props = defineProps<{ showLabel?: boolean }>();
 const switchLocalePath = useSwitchLocalePath();
-const { t, locales } = useI18n();
+const { t, locale, locales } = useI18n();
 const availableLocales = computed(
   () => locales.value as { code: string; icon: string; label: string }[]
+);
+
+const currentLocaleLabel = computed(
+  () => availableLocales.value.find((l) => l.code === locale.value)?.label
 );
 const isLocaleDropdownOpened = ref(false);
 </script>
@@ -10,7 +15,18 @@ const isLocaleDropdownOpened = ref(false);
 <template>
   <UiDropdown v-model:is-opened="isLocaleDropdownOpened" placement="bottom-end">
     <template #toggle="{ ref, props: toggleProps }">
+      <UiButton
+        v-if="props.showLabel"
+        :ref="ref"
+        v-bind="toggleProps"
+        variant="ghost"
+        :title="t('selectLanguage')"
+        right-icon="ph:globe"
+      >
+        {{ currentLocaleLabel }}
+      </UiButton>
       <UiIconButton
+        v-else
         :ref="ref"
         v-bind="toggleProps"
         :title="t('selectLanguage')"

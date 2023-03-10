@@ -6,7 +6,7 @@ const { t, locale } = useI18n();
   <!-- eslint-disable vue/no-multiple-template-root -->
   <Html :lang="locale">
     <Head>
-      <Title>Create V3 App</Title>
+      <Title>Avatar Generator</Title>
       <Meta name="description" :content="t('description')" />
     </Head>
   </Html>
