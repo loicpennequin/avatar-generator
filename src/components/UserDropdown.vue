@@ -11,7 +11,7 @@ const isOpened = ref(false);
   <UiDropdown
     v-if="session?.user"
     v-model:is-opened="isOpened"
-    placement="bottom-end"
+    placement="bottom-start"
   >
     <template #toggle="{ ref, props: toggleProps }">
       <button
@@ -35,6 +35,13 @@ const isOpened = ref(false);
       <UiDropdownItem icon="mingcute:power-line" capitalize @click="signOut()">
         {{ t('signoff') }}
       </UiDropdownItem>
+      <UiDropdownItem
+        icon="material-symbols:palette-outline"
+        :close-on-click="false"
+      >
+        Theme
+        <DarkModeToggle />
+      </UiDropdownItem>
     </template>
   </UiDropdown>
 </template>
@@ -48,10 +55,6 @@ const isOpened = ref(false);
   height: var(--size-6);
   padding: 0;
   aspect-ratio: 1;
-}
-
-.ui-dropdown-item {
-  width: max-content;
 }
 </style>
 

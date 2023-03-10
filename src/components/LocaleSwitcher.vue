@@ -13,7 +13,10 @@ const isLocaleDropdownOpened = ref(false);
 </script>
 
 <template>
-  <UiDropdown v-model:is-opened="isLocaleDropdownOpened" placement="bottom-end">
+  <UiDropdown
+    v-model:is-opened="isLocaleDropdownOpened"
+    placement="bottom-start"
+  >
     <template #toggle="{ ref, props: toggleProps }">
       <UiButton
         v-if="props.showLabel"

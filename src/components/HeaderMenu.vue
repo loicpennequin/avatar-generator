@@ -29,7 +29,25 @@ const onSignout = () => {
   <UiDrawer v-model:is-opened="isOpened" :title="t('title')">
     <nav>
       <ul>
-        <template v-if="!session?.user">
+        <template v-if="session?.user">
+          <li>
+            <button>{{ t('buy') }}</button>
+          </li>
+          <li>
+            {{ t('theme') }}
+            <DarkModeToggle is-switch />
+          </li>
+
+          <li>
+            {{ t('language') }}
+            <LocaleSwitcher show-label />
+          </li>
+          <li>
+            <button @click="onSignout">{{ t('signoff') }}</button>
+          </li>
+        </template>
+
+        <template v-else>
           <li>
             <NuxtLink
               :to="localePath({ name: 'signup' })"
@@ -47,21 +65,16 @@ const onSignout = () => {
               {{ t('signin') }}
             </NuxtLink>
           </li>
+          <li>
+            {{ t('theme') }}
+            <DarkModeToggle is-switch />
+          </li>
+
+          <li>
+            {{ t('language') }}
+            <LocaleSwitcher show-label />
+          </li>
         </template>
-
-        <li v-if="session?.user">
-          <button @click="onSignout">{{ t('signoff') }}</button>
-        </li>
-
-        <li>
-          {{ t('theme') }}
-          <DarkModeToggle is-switch />
-        </li>
-
-        <li>
-          {{ t('language') }}
-          <LocaleSwitcher show-label />
-        </li>
       </ul>
     </nav>
   </UiDrawer>
@@ -81,10 +94,12 @@ li {
   padding-block: var(--size-2);
 }
 
-a {
+a,
+button {
   background-color: transparent;
   color: inherit;
   padding: var(--size-2) 0;
+  margin: 0;
   text-decoration: none;
 }
 </style>
@@ -97,7 +112,8 @@ a {
     "signin": "Sign in",
     "signoff": "Sign off",
     "theme": "Theme",
-    "language": "Language"
+    "language": "Language",
+    "buy": "Add credits"
   },
   "fr": {
     "title": "Menu",
@@ -105,7 +121,8 @@ a {
     "signin": "Connexion",
     "signoff": "Déconnexion",
     "theme": "Thème",
-    "language": "Langue"
+    "language": "Langue",
+    "buy": "Ajouter des  credits"
   }
 }
 </i18n>

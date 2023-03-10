@@ -12,7 +12,18 @@ const { t } = useI18n();
 
   <nav class="desktop-nav">
     <ul>
-      <template v-if="!data?.user">
+      <template v-if="data?.user">
+        <li>
+          <UiButton>{{ t('buy') }}</UiButton>
+        </li>
+        <li>
+          <UserDropdown />
+        </li>
+        <li>
+          <LocaleSwitcher />
+        </li>
+      </template>
+      <template v-else>
         <li>
           <UiButton :to="localePath({ name: 'signup' })">
             {{ t('signup') }}
@@ -23,17 +34,13 @@ const { t } = useI18n();
             {{ t('signin') }}
           </UiButton>
         </li>
+        <li>
+          <DarkModeToggle />
+        </li>
+        <li>
+          <LocaleSwitcher />
+        </li>
       </template>
-
-      <li>
-        <DarkModeToggle />
-      </li>
-      <li>
-        <LocaleSwitcher />
-      </li>
-      <li v-if="data?.user">
-        <UserDropdown />
-      </li>
     </ul>
   </nav>
 </template>
@@ -65,11 +72,13 @@ ul {
 {
   "en": {
     "signup": "Get Started",
-    "signin": "Sign in"
+    "signin": "Sign in",
+    "buy": "Add credits"
   },
   "fr": {
     "signup": "Inscription",
-    "signin": "Connexion"
+    "signin": "Connexion",
+    "buy": "Ajouter des crédits"
   }
 }
 </i18n>

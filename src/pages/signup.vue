@@ -92,7 +92,7 @@ const onSubmit = handleSubmit((values) => {
         </UiInputCheckbox>
       </UiFormControl>
 
-      <UiButton rounded="full" text-lg>{{ t('submit') }}</UiButton>
+      <UiButton is-pill>{{ t('submit') }}</UiButton>
 
       <UiFormError v-if="error" :error="submitErrorMessage" text-lg m-y-3 />
 

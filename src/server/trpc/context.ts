@@ -1,12 +1,8 @@
-import { getServerSession } from '#auth';
 import { inferAsyncReturnType } from '@trpc/server';
-import { db } from '../db';
 import { H3Event } from 'h3';
+import { createRequestScope } from '~/server/container';
 
 export const createContext = async (event: H3Event) => {
-  return {
-    session: await getServerSession(event),
-    db
-  };
+  return await createRequestScope(event);
 };
 export type Context = inferAsyncReturnType<typeof createContext>;

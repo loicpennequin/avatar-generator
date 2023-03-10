@@ -121,7 +121,6 @@ const { containerEl, initialFocusEl, vModel } = useModal(props, emit);
       opacity: 0;
     }
     & .container {
-      opacity: 0;
       position: relative;
       z-index: 1;
       transform: var(--_transform);
@@ -142,22 +141,22 @@ const { containerEl, initialFocusEl, vModel } = useModal(props, emit);
       justify-self: start;
       width: 100%;
       max-width: var(--_size);
-      --_transform: translateX(calc(-1 * var(--size-8)));
+      --_transform: translateX(-100%);
     }
     &.right {
       justify-self: end;
       width: var(--_size);
-      --_transform: translateX(calc(var(--size-8)));
+      --_transform: translateX(100%);
     }
     &.top {
       align-self: start;
       height: var(--_size);
-      --_transform: translateY(calc(-1 * var(--size-8)));
+      --_transform: translateY(-100%);
     }
     &.bottom {
       align-self: end;
       height: var(--_size);
-      --_transform: translateY(calc(var(--size-8)));
+      --_transform: translateY(100%);
     }
 
     &.xxs {

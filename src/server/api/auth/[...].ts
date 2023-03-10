@@ -6,7 +6,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { db } from '~/server/db';
-import * as bcrypt from 'bcrypt';
+import { container } from '~/server/container';
 
 type SigninCredentials = {
   email: string;
@@ -37,9 +37,9 @@ export default NuxtAuthHandler({
       const { session } = arg;
       if (!session.user || !session.user.email) return session;
 
-      session.user = (await db.user.findUnique({
-        where: { email: session.user.email }
-      })) as PrismaUser;
+      const useCase = container.resolve('getSessionUserUseCase');
+      const user = await useCase(session.user.email);
+      if (user) session.user = user;
 
       return session;
     }
@@ -66,34 +66,15 @@ export default NuxtAuthHandler({
       name: 'e-mail',
       credentials: {
         email: {
-          label: 'E-mail',
           type: 'email'
         },
         password: {
-          label: 'Password',
           type: 'password'
         }
       },
       async authorize(credentials: SigninCredentials) {
-        const user = await db.user.findUnique({
-          where: { email: credentials.email },
-          include: {
-            accounts: {
-              select: { passwordHash: true },
-              where: { provider: 'credentials' }
-            }
-          }
-        });
-
-        if (!user || user.accounts.length === 0) return null;
-
-        const [account] = user.accounts;
-        const isValid = bcrypt.compareSync(
-          credentials.password,
-          account.passwordHash as string
-        );
-
-        if (!isValid) return null;
+        const signinUseCase = container.resolve('signinUseCase');
+        const user = await signinUseCase(credentials);
 
         return user;
       }

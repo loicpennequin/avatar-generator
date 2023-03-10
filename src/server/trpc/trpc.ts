@@ -1,11 +1,17 @@
-import { TRPCError, initTRPC } from '@trpc/server';
-import { Context } from '~/server/trpc/context';
+import { TRPCError, initTRPC, inferAsyncReturnType } from '@trpc/server';
 import superjson from 'superjson';
 import chalk from 'chalk';
+import { H3Event } from 'h3';
+import { createRequestScope } from '~/server/container';
 
-export const logger = (...messages: string[]) =>
+const createContext = async (event: H3Event) => {
+  return await createRequestScope(event);
+};
+
+const trpcLogger = (...messages: string[]) =>
   console.log(chalk.blue('[ TRPC ]'), ' - ', ...messages);
 
+type Context = inferAsyncReturnType<typeof createContext>;
 const t = initTRPC.context<Context>().create({
   transformer: superjson
 });
@@ -24,12 +30,12 @@ const authMiddleware = t.middleware(({ ctx, next }) => {
 });
 
 const loggerMiddleware = t.middleware(async ({ path, next }) => {
-  logger(`${path}`);
+  trpcLogger(`${path}`);
 
   const start = Date.now();
   const result = await next();
   const durationMs = Date.now() - start;
-  logger(`${path} - END : ${durationMs}ms`);
+  trpcLogger(`${path} - END : ${durationMs}ms`);
 
   return result;
 });

@@ -27,6 +27,29 @@ const localePath = useLocalePath();
         </a>
       </template>
     </i18n-t>
+
+    <aside class="app-bar">
+      <button>
+        <Icon name="material-symbols:home-sharp" />
+        <span>Home</span>
+      </button>
+      <button>
+        <Icon name="ph:currency-circle-dollar-bold" />
+        <span>Add credits</span>
+      </button>
+      <button>
+        <Icon name="material-symbols:rocket-launch-outline-rounded" />
+        <span>Generate</span>
+      </button>
+      <button>
+        <Icon name="icomoon-free:images" />
+        <span>Collection</span>
+      </button>
+      <button>
+        <Icon name="ph:users-three-fill" />
+        <span>Community</span>
+      </button>
+    </aside>
   </div>
 </template>
 
@@ -34,7 +57,7 @@ const localePath = useLocalePath();
 @import '~/styles/medias.css';
 .layout {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto auto;
   min-height: 100vh;
 
   & header {
@@ -62,6 +85,32 @@ const localePath = useLocalePath();
 
     & a {
       text-decoration: none;
+    }
+  }
+}
+
+.app-bar {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--surface-1);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
+  padding: var(--size-2);
+
+  @media (--md-n-above) {
+    display: none;
+  }
+
+  & button {
+    background-color: transparent;
+    color: inherit;
+    font-size: var(--font-size-4);
+
+    & > span {
+      font-size: var(--font-size-0);
+      display: block;
+      text-align: center;
     }
   }
 }

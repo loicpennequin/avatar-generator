@@ -58,8 +58,8 @@ export default defineNuxtConfig({
     'nuxt-icon',
     'nuxt-typed-router',
     '@nuxt/image-edge',
-    '@sidebase/nuxt-auth',
-    '@nuxt/devtools'
+    '@sidebase/nuxt-auth'
+    // '@nuxt/devtools'
   ],
 
   postcss: {
