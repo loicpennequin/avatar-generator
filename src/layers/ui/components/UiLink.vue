@@ -6,10 +6,16 @@ const props = defineProps<{
   to?: TypedNuxtLinkProps['to'];
 }>();
 
-const is = computed(() => (props.to ? NuxtLink : 'button'));
+const attrs = useAttrs();
+const tag = computed(() => {
+  if (props.to) return NuxtLink;
+  if (attrs.href) return 'a';
+
+  return 'button';
+});
 </script>
 <template>
-  <component :is="is" :to="props.to" prefetch class="ui-link">
+  <component :is="tag" :to="props.to" prefetch class="ui-link">
     <slot />
   </component>
 </template>

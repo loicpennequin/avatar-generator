@@ -2,7 +2,10 @@ import { TRPCError, initTRPC, inferAsyncReturnType } from '@trpc/server';
 import superjson from 'superjson';
 import chalk from 'chalk';
 import { H3Event } from 'h3';
-import { createRequestScope } from '~/server/container';
+import {
+  AuthenticatedRequestScopedContainer,
+  createRequestScope
+} from '~/server/container';
 
 const createContext = async (event: H3Event) => {
   return await createRequestScope(event);
@@ -17,16 +20,13 @@ const t = initTRPC.context<Context>().create({
 });
 
 const authMiddleware = t.middleware(({ ctx, next }) => {
-  if (!ctx.session?.user) {
+  const session = ctx.resolve('session');
+
+  if (!session?.user) {
     throw new TRPCError({ code: 'UNAUTHORIZED' });
   }
 
-  return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user }
-    }
-  });
+  return next({ ctx: ctx as AuthenticatedRequestScopedContainer });
 });
 
 const loggerMiddleware = t.middleware(async ({ path, next }) => {

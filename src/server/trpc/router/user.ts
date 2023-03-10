@@ -1,10 +1,19 @@
-import { procedure, router } from '../trpc';
-import { signupDto } from '~/server/useCases/signup';
+import { signupDto } from '../../dtos/user';
+import { authenticatedProcedure, procedure, router } from '../trpc';
 
 export const userRouter = router({
   signup: procedure.input(signupDto).mutation(async ({ input, ctx }) => {
-    const signupUseCase = ctx.resolve('signupUseCase');
-    const user = await signupUseCase(input);
+    const useCase = ctx.resolve('signupUseCase');
+    const user = await useCase(input);
+    return user;
+  }),
+
+  acceptTos: authenticatedProcedure.mutation(async ({ ctx }) => {
+    const useCase = ctx.resolve('acceptTosUseCase');
+    const session = ctx.resolve('session');
+
+    const user = await useCase(session.user.id);
+
     return user;
   })
 });

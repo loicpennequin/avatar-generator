@@ -128,6 +128,7 @@ const { containerEl, initialFocusEl, vModel } = useModal(props, emit);
     --_offset-y: 0;
     margin-block-start: 0;
     align-self: center;
+    max-height: 100vh;
   }
 }
 
@@ -159,6 +160,8 @@ const { containerEl, initialFocusEl, vModel } = useModal(props, emit);
     position: sticky;
     bottom: 0;
     border-top: solid 1px var(--border-dimmed);
+    display: flex;
+    justify-content: space-between;
   }
 
   & > header,

@@ -10,6 +10,7 @@ const { t, locale } = useI18n();
       <Meta name="description" :content="t('description')" />
     </Head>
   </Html>
+  <TosModal />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

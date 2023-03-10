@@ -1,12 +1,7 @@
 import { Db } from '~/server/db';
-import { z } from 'zod';
 import { hashSync } from 'bcrypt';
+import { SignupDto } from '../dtos/user';
 type Deps = { db: Db };
-export const signupDto = z.object({
-  email: z.string().email().trim(),
-  password: z.string()
-});
-export type SignupDto = z.infer<typeof signupDto>;
 
 export const signupUseCase =
   ({ db }: Deps) =>
@@ -14,6 +9,7 @@ export const signupUseCase =
     const user = await db.user.create({
       data: {
         email: dto.email,
+        tosAcceptedAt: new Date(),
         accounts: {
           create: {
             type: 'credentials',

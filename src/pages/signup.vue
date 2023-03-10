@@ -3,6 +3,7 @@ import { useForm } from 'vee-validate';
 import { toFormValidator } from '@vee-validate/zod';
 import { z } from 'zod';
 import { Translation } from 'vue-i18n';
+import { signupDto } from '../server/dtos/user';
 
 definePageMeta({
   middleware: ['public-only']
@@ -12,12 +13,9 @@ const { t } = useI18n();
 const { signIn } = useSession();
 const localePath = useLocalePath();
 
-const FormSchema = z
-  .object({
-    email: z.string(),
-    password: z.string(),
-    passwordConfirm: z.string(),
-    isTosAccepted: z.boolean()
+const FormSchema = signupDto
+  .extend({
+    passwordConfirm: z.string()
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: t('errors.passwordMatch'),
@@ -88,7 +86,16 @@ const onSubmit = handleSubmit((values) => {
         name="isTosAccepted"
       >
         <UiInputCheckbox v-bind="slotProps">
-          {{ t('labels.acceptTos') }}
+          <Translation keypath="labels.acceptTos">
+            <template #link>
+              <UiLink
+                :href="localePath({ name: 'terms-of-service' })"
+                target="_blank"
+              >
+                {{ t('tosLink') }}
+              </UiLink>
+            </template>
+          </Translation>
         </UiInputCheckbox>
       </UiFormControl>
 
@@ -123,7 +130,7 @@ form {
       "email": "Email",
       "password": "Password",
       "passwordConfirm": "Confirm Password",
-      "acceptTos": "I agree to the Terms of Service"
+      "acceptTos": "I agree to the {link}"
     },
     "submit": "Sign in",
     "errors": {
@@ -132,7 +139,8 @@ form {
     "signin": {
       "text": "Already have an account ? {link}",
       "link": "Sign in"
-    }
+    },
+    "tosLink": "Terms and Conditions"
   },
   "fr": {
     "title": "Inscription",
@@ -140,7 +148,7 @@ form {
       "email": "Adresse e-mail",
       "password": "Mot de passe",
       "passwordConfirm": "Confirmer le mot de passe",
-      "acceptTos": "J'accepte les conditions d'utilisation"
+      "acceptTos": "J'accepte les {link}"
     },
     "submit": "Continuer",
     "errors": {
@@ -149,7 +157,8 @@ form {
     "signin": {
       "text": "Vous avez déjà un compte ? {link}",
       "link": "Se connecter"
-    }
+    },
+    "tosLink": "Conditions d'utilisation"
   }
 }
 </i18n>

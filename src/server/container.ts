@@ -13,6 +13,16 @@ import { H3Event } from 'h3';
 import { getServerSession } from '#auth';
 import { AsyncReturnType } from '~~/src/utils/types';
 import { signupUseCase } from './useCases/signup';
+import { acceptTosUseCase } from './useCases/acceptTos';
+import { Session } from 'next-auth';
+
+const injectables = {
+  db: asValue(db),
+  getSessionUserUseCase: asFunction(getSessionUserUseCase),
+  signinUseCase: asFunction(signinUseCase),
+  signupUseCase: asFunction(signupUseCase),
+  acceptTosUseCase: asFunction(acceptTosUseCase)
+};
 
 type ContainerDefinition = Record<string, Resolver<unknown>>;
 type ExtractResolverType<T> = T extends Resolver<infer X> ? X : null;
@@ -39,17 +49,19 @@ export const createTypedContainer = <T extends ContainerDefinition>(
   return container;
 };
 
-export const container = createTypedContainer({
-  db: asValue(db),
-  getSessionUserUseCase: asFunction(getSessionUserUseCase),
-  signinUseCase: asFunction(signinUseCase),
-  signupUseCase: asFunction(signupUseCase)
-});
+export const container = createTypedContainer(injectables);
 
 export type Container = typeof container;
-export type RequestScopedContainer = Container & {
-  session: AsyncReturnType<typeof getServerSession>;
-};
+export type RequestScopedContainer = TypedAwilixContainer<
+  typeof injectables & {
+    session: Resolver<AsyncReturnType<typeof getServerSession>>;
+  }
+>;
+export type AuthenticatedRequestScopedContainer = TypedAwilixContainer<
+  typeof injectables & {
+    session: Resolver<Session>;
+  }
+>;
 
 export const createRequestScope = async (
   event: H3Event

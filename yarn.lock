@@ -1785,6 +1785,28 @@
     requrl "^3.0.2"
     ufo "^1.0.1"
 
+"@storyblok/js@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@storyblok/js/-/js-2.1.0.tgz#4bafc7ff57d0d3f7a7918b8a33f6b1230217483d"
+  integrity sha512-P8Z/lt4GJP82KaBuJc5dLU8fJt1acEqmSsBuCHVg7Pie9wyjSxM7s80BhAyqWIj6AJdQa2gaN+dXEtbr3MIXRA==
+  dependencies:
+    storyblok-js-client "^5.4.1"
+
+"@storyblok/nuxt@^5.3.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@storyblok/nuxt/-/nuxt-5.3.0.tgz#1360e438504b7df7b9898dbfc1d803d6435c122b"
+  integrity sha512-355QofnjmEiurl2py0wPXUJKK77Sl73NAr8uHjQ79+Q8XE8Ytq5b658OikJRXsSWiz+hjZJW5+AWkwOYwusi+g==
+  dependencies:
+    "@nuxt/kit" "^3.0.0"
+    "@storyblok/vue" "^7.0.0"
+
+"@storyblok/vue@^7.0.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@storyblok/vue/-/vue-7.1.0.tgz#a01b6f25fbc8869e646abcc8248037296c989931"
+  integrity sha512-R8Nq3CbprP/kPPyjeTCU/agn36ylZ3ZGmrq+2N+RByG+fnG6KFkJO7Eqbht7ERb/Ufo1dP2gQADbzZ0AuamkFQ==
+  dependencies:
+    "@storyblok/js" "^2.1.0"
+
 "@tanstack/match-sorter-utils@^8.1.1":
   version "8.7.6"
   resolved "https://registry.yarnpkg.com/@tanstack/match-sorter-utils/-/match-sorter-utils-8.7.6.tgz#ccf54a37447770e0cf0fe49a579c595fd2655b16"
@@ -3822,7 +3844,14 @@ create-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-cross-spawn@^7.0.2, cross-spawn@^7.0.3:
+cross-env@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
+  integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
+  dependencies:
+    cross-spawn "^7.0.1"
+
+cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
   integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
@@ -8551,6 +8580,11 @@ stop-iteration-iterator@^1.0.0:
   integrity sha512-iCGQj+0l0HOdZ2AEeBADlsRC+vsnDsZsbdSiH1yNSjcfKM7fdpCMfqAL/dwF5BLiw/XhRft/Wax6zQbhq2BcjQ==
   dependencies:
     internal-slot "^1.0.4"
+
+storyblok-js-client@^5.4.1:
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/storyblok-js-client/-/storyblok-js-client-5.6.0.tgz#bc09f92373438460302d6bfb826d178dc7447e86"
+  integrity sha512-gHAjKgGzjsszf5NdsNR9IWl9oaeFA6aj8HFtZXpvFINu/Y/bZ3AM8+RKuerOvs8lbRjCNV88i8PpwLgY6ZwWsw==
 
 "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"

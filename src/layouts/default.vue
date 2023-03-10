@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useI18n();
+const { t } = useI18n();
 
 const localePath = useLocalePath();
 </script>
@@ -16,40 +16,26 @@ const localePath = useLocalePath();
 
     <slot />
 
-    <i18n-t keypath="footer" tag="footer">
-      <template #link>
-        <a
-          href="https://github.com/loicpennequin"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Daria aka "CEO of Based"
-        </a>
-      </template>
-    </i18n-t>
+    <footer>
+      <UiContainer size="xl">
+        <i18n-t keypath="footer" tag="span">
+          <template #link>
+            <a
+              href="https://github.com/loicpennequin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Daria aka "CEO of Based"
+            </a>
+          </template>
+        </i18n-t>
+        <UiLink :to="localePath({ name: 'terms-of-service' })">
+          {{ t('tos') }}
+        </UiLink>
+      </UiContainer>
+    </footer>
 
-    <aside class="app-bar">
-      <button>
-        <Icon name="material-symbols:home-sharp" />
-        <span>Home</span>
-      </button>
-      <button>
-        <Icon name="ph:currency-circle-dollar-bold" />
-        <span>Add credits</span>
-      </button>
-      <button>
-        <Icon name="material-symbols:rocket-launch-outline-rounded" />
-        <span>Generate</span>
-      </button>
-      <button>
-        <Icon name="icomoon-free:images" />
-        <span>Collection</span>
-      </button>
-      <button>
-        <Icon name="ph:users-three-fill" />
-        <span>Community</span>
-      </button>
-    </aside>
+    <BottomNavigation />
   </div>
 </template>
 
@@ -69,9 +55,10 @@ const localePath = useLocalePath();
     padding-block: var(--size-2);
   }
 
-  & footer {
-    text-align: center;
-    margin-block-start: var(--size-10);
+  & footer > div {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--size-5);
   }
 }
 
@@ -89,41 +76,17 @@ const localePath = useLocalePath();
     }
   }
 }
-
-.app-bar {
-  position: sticky;
-  bottom: 0;
-  background-color: var(--surface-1);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  justify-items: center;
-  padding: var(--size-2);
-
-  @media (--md-n-above) {
-    display: none;
-  }
-
-  & button {
-    background-color: transparent;
-    color: inherit;
-    font-size: var(--font-size-4);
-
-    & > span {
-      font-size: var(--font-size-0);
-      display: block;
-      text-align: center;
-    }
-  }
-}
 </style>
 
 <i18n lang="json">
 {
   "en": {
-    "footer": "Made with 💀 by {link}"
+    "footer": "© Copyright {link}",
+    "tos": "Terms and Conditions"
   },
   "fr": {
-    "footer": "Fait avec 💀 par {link}"
+    "footer": "© Copyright {link}",
+    "tos": "conditions d'utilisation"
   }
 }
 </i18n>
