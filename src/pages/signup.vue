@@ -54,7 +54,7 @@ const onSubmit = handleSubmit((values) => {
 <template>
   <UiCenter>
     <UiSurface as="form" @submit.prevent="onSubmit">
-      <h2 text-3xl>{{ t('title') }}</h2>
+      <h2>{{ t('title') }}</h2>
       <UiFormControl
         id="signup-email"
         v-slot="slotProps"
@@ -94,9 +94,9 @@ const onSubmit = handleSubmit((values) => {
 
       <UiButton is-pill>{{ t('submit') }}</UiButton>
 
-      <UiFormError v-if="error" :error="submitErrorMessage" text-lg m-y-3 />
+      <UiFormError v-if="error" :error="submitErrorMessage" />
 
-      <Translation keypath="signin.text" tag="p" text-center>
+      <Translation keypath="signin.text" tag="p">
         <template #link>
           <UiLink :to="localePath('/signin')">{{ t('signin.link') }}</UiLink>
         </template>

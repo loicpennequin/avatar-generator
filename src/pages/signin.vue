@@ -58,9 +58,9 @@ const submitErrorMessage = computed(() => route.query.error as string);
         :label="t('labels.password')"
       >
         <UiInputPassword v-bind="slotProps" left-icon="mdi:lock-outline" />
-        <NuxtLink :to="localePath('/')">
+        <UiLink :to="localePath('/')">
           {{ t('forgotPasswordLink') }}
-        </NuxtLink>
+        </UiLink>
       </UiFormControl>
 
       <UiButton type="submit" is-pill>

@@ -71,6 +71,7 @@ const localePath = useLocalePath();
 
   & footer {
     text-align: center;
+    margin-block-start: var(--size-10);
   }
 }
 
