@@ -7,7 +7,7 @@
         <h2>Dumbass title</h2>
         <p>Dumbass tagline</p>
 
-        <UiButton>Get Started</UiButton>
+        <UiButton :to="{ name: 'generate' }">Get Started</UiButton>
       </section>
     </UiSurface>
   </UiCenter>

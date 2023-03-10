@@ -6,22 +6,25 @@ import {
   asFunction,
   asValue
 } from 'awilix';
-import { getSessionUserUseCase } from '~/server/useCases/getSessionUser';
-import { signinUseCase } from '~/server/useCases/signin';
+import { Session } from 'next-auth';
 import { db } from '~/server/db';
 import { H3Event } from 'h3';
 import { getServerSession } from '#auth';
 import { AsyncReturnType } from '~~/src/utils/types';
+
 import { signupUseCase } from './useCases/signup';
+import { getSessionUserUseCase } from '~/server/useCases/getSessionUser';
+import { signinUseCase } from '~/server/useCases/signin';
 import { acceptTosUseCase } from './useCases/acceptTos';
-import { Session } from 'next-auth';
+import { generateImageUseCase } from './useCases/generateImage';
 
 const injectables = {
   db: asValue(db),
   getSessionUserUseCase: asFunction(getSessionUserUseCase),
   signinUseCase: asFunction(signinUseCase),
   signupUseCase: asFunction(signupUseCase),
-  acceptTosUseCase: asFunction(acceptTosUseCase)
+  acceptTosUseCase: asFunction(acceptTosUseCase),
+  generateImageUseCase: asFunction(generateImageUseCase)
 };
 
 type ContainerDefinition = Record<string, Resolver<unknown>>;

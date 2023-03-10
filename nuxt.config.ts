@@ -27,7 +27,8 @@ export default defineNuxtConfig({
     githubClientId: '',
     githubClientSecret: '',
     googleClientId: '',
-    googleClientSecret: ''
+    googleClientSecret: '',
+    openAiKey: ''
   },
 
   experimental: {
