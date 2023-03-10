@@ -1,7 +1,6 @@
 <script setup lang="ts">
 useI18n();
 
-const switchLocalePath = useSwitchLocalePath();
 const localePath = useLocalePath();
 </script>
 
@@ -10,16 +9,8 @@ const localePath = useLocalePath();
     <header>
       <UiContainer size="xl" class="header-inner">
         <h1><NuxtLink :to="localePath('/')">Create V3 App UI</NuxtLink></h1>
-        <nav>
-          <NuxtLink :to="localePath('/style-guide')">Style Guide</NuxtLink>
-          <DarkModeToggle />
-          <NuxtLink :to="switchLocalePath('en')">
-            <Icon name="circle-flags:uk" />
-          </NuxtLink>
-          <NuxtLink :to="switchLocalePath('fr')">
-            <Icon name="circle-flags:fr" />
-          </NuxtLink>
-        </nav>
+
+        <HeaderNav />
       </UiContainer>
     </header>
 
@@ -40,14 +31,11 @@ const localePath = useLocalePath();
 </template>
 
 <style lang="postcss" scoped>
-:global(body) {
-  background: var(--surface-2);
-  color: var(--text-1);
-}
-
+@import '~/styles/medias.css';
 .layout {
   display: grid;
   grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
 
   & header {
     background-color: var(--surface-1);
@@ -68,18 +56,8 @@ const localePath = useLocalePath();
   align-items: center;
   padding: var(--size-2) var(--size-5);
 
-  & > nav {
-    display: flex;
-    gap: var(--size-2);
-    align-items: center;
-  }
-
   & h1 {
     font-size: var(--size-5);
-  }
-
-  & a {
-    color: inherit;
   }
 }
 </style>

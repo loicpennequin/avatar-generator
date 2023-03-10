@@ -25,7 +25,9 @@ export default defineNuxtConfig({
     discordClientId: '',
     discordClientSecret: '',
     githubClientId: '',
-    githubClientSecret: ''
+    githubClientSecret: '',
+    googleClientId: '',
+    googleClientSecret: ''
   },
 
   experimental: {
@@ -40,7 +42,11 @@ export default defineNuxtConfig({
     typeCheck: 'build'
   },
 
-  css: ['open-props/postcss/normalize', '~/styles/theme.css'],
+  css: [
+    'open-props/postcss/normalize',
+    '~/styles/theme.css',
+    '~/styles/global.css'
+  ],
 
   modules: [
     '@vue-macros/nuxt',
@@ -55,11 +61,6 @@ export default defineNuxtConfig({
     '@sidebase/nuxt-auth',
     '@nuxt/devtools'
   ],
-
-  localtunnel: {
-    port: 3000,
-    subdomain: 'cva-ui'
-  },
 
   postcss: {
     plugins: {

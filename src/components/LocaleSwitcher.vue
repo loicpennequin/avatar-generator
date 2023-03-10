@@ -1,0 +1,50 @@
+<script setup lang="ts">
+const switchLocalePath = useSwitchLocalePath();
+const { t, locales } = useI18n();
+const availableLocales = computed(
+  () => locales.value as { code: string; icon: string; label: string }[]
+);
+const isLocaleDropdownOpened = ref(false);
+</script>
+
+<template>
+  <UiDropdown v-model:is-opened="isLocaleDropdownOpened" placement="bottom-end">
+    <template #toggle="{ ref, props: toggleProps }">
+      <UiIconButton
+        :ref="ref"
+        v-bind="toggleProps"
+        :title="t('selectLanguage')"
+        icon="ph:globe"
+      />
+    </template>
+
+    <template #menu>
+      <UiDropdownItem
+        v-for="locale in availableLocales"
+        :key="locale.code"
+        :to="switchLocalePath(locale.code)"
+        :icon="locale.icon"
+        class="dropdown-item"
+      >
+        {{ locale.label }}
+      </UiDropdownItem>
+    </template>
+  </UiDropdown>
+</template>
+
+<style scoped lang="postcss">
+.dropdown-item {
+  text-transform: capitalize;
+}
+</style>
+
+<i18n lang="json">
+{
+  "en": {
+    "selectLanguage": "Select Language"
+  },
+  "fr": {
+    "selectLanguage": "Choisir la langue"
+  }
+}
+</i18n>

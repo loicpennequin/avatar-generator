@@ -1,5 +1,5 @@
 {
-  "name": "marketplace",
+  "name": "avatar-generator",
   "version": "0.1.0",
   "scripts": {
     "build": "nuxt build",
@@ -23,12 +23,14 @@
     "@tanstack/vue-query": "^4.24.6",
     "@trpc/client": "^10.11.0",
     "@trpc/server": "^10.11.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/lodash-es": "^4.17.6",
     "@vee-validate/zod": "^4.7.4",
     "@vueuse/core": "^9.12.0",
     "@vueuse/integrations": "^9.13.0",
     "@zag-js/dialog": "^0.2.13",
     "@zag-js/vue": "^0.2.10",
+    "bcrypt": "^5.1.0",
     "chalk": "5.2.0",
     "class-variance-authority": "^0.4.0",
     "lodash-es": "^4.17.21",
