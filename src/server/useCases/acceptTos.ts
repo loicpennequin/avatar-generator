@@ -1,12 +1,13 @@
+import { Session } from 'next-auth';
 import { Db } from '../db';
 
-type Deps = { db: Db };
+type Deps = { db: Db; session: Session };
 
 export const acceptTosUseCase =
-  ({ db }: Deps) =>
-  async (id: string) => {
-    await db.user.update({
-      where: { id },
+  ({ db, session }: Deps) =>
+  () => {
+    return db.user.update({
+      where: { id: session.user.id },
       data: {
         tosAcceptedAt: new Date()
       }

@@ -1,22 +1,30 @@
-import { Configuration, OpenAIApi } from 'openai';
-import { GenerateImageDto } from '../dtos/image';
+import { GenerateImageDto } from '~/server/dtos/image';
+import { Db } from '~/server/db';
+import { Session } from 'next-auth';
+import { UploadImageUseCase } from './uploadImage';
+import { AiService } from '../services/aiService';
+
+type Deps = {
+  db: Db;
+  session: Session;
+  aiService: AiService;
+  uploadImageUseCase: UploadImageUseCase;
+};
 
 export const generateImageUseCase =
-  () =>
-  async ({ prompt }: GenerateImageDto) => {
-    const runtimeConfig = useRuntimeConfig();
+  ({ db, session, aiService, uploadImageUseCase }: Deps) =>
+  async ({ prompt, color, style }: GenerateImageDto) => {
+    const imageURL = await aiService.generateImage({ prompt, color, style });
+    const [url, miniatureUrl] = await uploadImageUseCase(imageURL);
 
-    const openai = new OpenAIApi(
-      new Configuration({
-        apiKey: runtimeConfig.openAiKey
-      })
-    );
-
-    const response = await openai.createImage({
-      prompt,
-      n: 1,
-      size: '1024x1024'
+    return db.generatedImage.create({
+      data: {
+        ownerId: session.user.id,
+        url,
+        miniatureUrl,
+        prompt,
+        color,
+        style
+      }
     });
-
-    return response.data.data[0].url;
   };

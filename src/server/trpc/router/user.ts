@@ -1,19 +1,27 @@
-import { signupDto } from '../../dtos/user';
+import { signupDto, userResponseDto } from '../../dtos/user';
 import { authenticatedProcedure, procedure, router } from '../trpc';
 
 export const userRouter = router({
-  signup: procedure.input(signupDto).mutation(async ({ input, ctx }) => {
-    const useCase = ctx.resolve('signupUseCase');
-    const user = await useCase(input);
-    return user;
-  }),
+  signup: procedure
+    .input(signupDto)
+    .output(userResponseDto)
+    .mutation(async ({ input, ctx }) => {
+      const useCase = ctx.resolve('signupUseCase');
+      const user = await useCase(input);
 
-  acceptTos: authenticatedProcedure.mutation(async ({ ctx }) => {
-    const useCase = ctx.resolve('acceptTosUseCase');
-    const session = ctx.resolve('session');
+      const mapper = ctx.resolve('userMapper');
 
-    const user = await useCase(session.user.id);
+      return mapper.toResponseDto(user);
+    }),
 
-    return user;
-  })
+  acceptTos: authenticatedProcedure
+    .output(userResponseDto)
+    .mutation(async ({ ctx }) => {
+      const useCase = ctx.resolve('acceptTosUseCase');
+      const user = await useCase();
+
+      const mapper = ctx.resolve('userMapper');
+
+      return mapper.toResponseDto(user);
+    })
 });

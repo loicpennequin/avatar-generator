@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { useField } from 'vee-validate';
 
-const props = defineProps<{ name: string; id: string; label?: string }>();
+const props = defineProps<{
+  name: string;
+  id: string;
+  label?: string;
+  isGroup?: boolean;
+}>();
 const { value, errorMessage, meta } = useField(toRef(props, 'name'));
 
 const slotProps = computed(() => ({
@@ -18,7 +23,7 @@ const slotProps = computed(() => ({
 <template>
   <fieldset class="ui-form-control">
     <slot name="label">
-      <UiFormLabel v-if="props.label" :for="props.id">
+      <UiFormLabel v-if="props.label" :for="props.id" :is-group="props.isGroup">
         {{ props.label }}
       </UiFormLabel>
     </slot>

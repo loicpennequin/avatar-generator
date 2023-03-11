@@ -1,5 +1,4 @@
 import { NuxtAuthHandler } from '#auth';
-import { User as PrismaUser } from '@prisma/client';
 import GithubProvider from 'next-auth/providers/github';
 import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
@@ -7,6 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { db } from '~/server/db';
 import { container } from '~/server/container';
+import { UserResponseDto } from '~/server/dtos/user';
 
 type SigninCredentials = {
   email: string;
@@ -14,7 +14,7 @@ type SigninCredentials = {
 };
 
 declare module 'next-auth' {
-  interface User extends PrismaUser {}
+  interface User extends UserResponseDto {}
   interface Session {
     user: User;
   }
@@ -39,7 +39,10 @@ export default NuxtAuthHandler({
 
       const useCase = container.resolve('getSessionUserUseCase');
       const user = await useCase(session.user.email);
-      if (user) session.user = user;
+      if (user) {
+        const mapper = container.resolve('userMapper');
+        session.user = mapper.toResponseDto(user, { forceSelf: true });
+      }
 
       return session;
     }

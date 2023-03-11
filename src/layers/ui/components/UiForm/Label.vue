@@ -1,9 +1,13 @@
 <script setup lang="ts">
-const props = defineProps<{ for: string }>();
+const props = defineProps<{ for: string; isGroup?: boolean }>();
+
+const tag = computed(() => (props.isGroup ? 'legend' : 'label'));
 </script>
 
 <template>
-  <label :for="props.for" class="ui-form-label"><slot /></label>
+  <component :is="tag" :for="props.for" class="ui-form-label">
+    <slot />
+  </component>
 </template>
 
 <style scoped>

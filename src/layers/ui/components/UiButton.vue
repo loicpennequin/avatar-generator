@@ -38,6 +38,7 @@ const tag = computed(() => {
     :to="props.to"
     class="ui-button-base"
     :class="[props.size, props.variant, props.isPill && 'pill']"
+    :disabled="attrs.disabled || props.isLoading"
   >
     <Icon
       v-if="props.leftIcon && !props.isLoading"
@@ -46,8 +47,8 @@ const tag = computed(() => {
       class="icon"
     />
 
-    <!-- <UiSpinner text-2xl v-if="isLoading" /> -->
-    <slot />
+    <UiSpinner v-if="props.isLoading" text-2xl />
+    <slot v-else />
 
     <Icon
       v-if="props.rightIcon && !props.isLoading"

@@ -1,7 +1,7 @@
 import { generateImageDto } from '../../dtos/image';
 import { authenticatedProcedure, router } from '../trpc';
 
-export const userRouter = router({
+export const imageRouter = router({
   generate: authenticatedProcedure
     .input(generateImageDto)
     .mutation(async ({ input, ctx }) => {

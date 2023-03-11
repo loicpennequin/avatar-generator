@@ -50,7 +50,9 @@ watch([vModel, focused], ([, focused], [prevIsOpened, prevFocused]) => {
     vModel.value = false;
   }
 });
+
 const activeElement = useActiveElement();
+
 useEventListener('keydown', (e) => {
   if (![KEYBOARD.ArrowDown, KEYBOARD.ArrowUp].includes(e.code as any)) return;
   if (!props.isOpened) return;

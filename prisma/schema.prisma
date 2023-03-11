@@ -37,16 +37,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  tosAcceptedAt DateTime?
-  accounts      Account[]
-  sessions      Session[]
+  id             String           @id @default(cuid())
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime?        @updatedAt
+  name           String?
+  email          String?          @unique
+  emailVerified  DateTime?
+  image          String?
+  tosAcceptedAt  DateTime?
+  accounts       Account[]
+  sessions       Session[]
+  GeneratedImage GeneratedImage[]
 }
 
 model VerificationToken {
@@ -55,4 +56,17 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model GeneratedImage {
+  id           String    @id @unique @default(cuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  ownerId      String
+  url          String
+  miniatureUrl String
+  prompt       String    @db.Text
+  color        String
+  style        String
+  owner        User      @relation(fields: [ownerId], references: [id])
 }

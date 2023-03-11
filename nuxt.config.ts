@@ -28,7 +28,10 @@ export default defineNuxtConfig({
     githubClientSecret: '',
     googleClientId: '',
     googleClientSecret: '',
-    openAiKey: ''
+    openaiKey: '',
+    awsAccessKey: '',
+    awsSecretAccessKey: '',
+    awsS3Bucket: ''
   },
 
   experimental: {

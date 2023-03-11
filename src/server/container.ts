@@ -17,14 +17,25 @@ import { getSessionUserUseCase } from '~/server/useCases/getSessionUser';
 import { signinUseCase } from '~/server/useCases/signin';
 import { acceptTosUseCase } from './useCases/acceptTos';
 import { generateImageUseCase } from './useCases/generateImage';
+import { uploadImageUseCase } from './useCases/uploadImage';
+import { uploadService } from './services/uploadService';
+import { aiService } from './services/aiService';
+import { userMapper } from './mappers/user';
 
 const injectables = {
   db: asValue(db),
+
   getSessionUserUseCase: asFunction(getSessionUserUseCase),
   signinUseCase: asFunction(signinUseCase),
   signupUseCase: asFunction(signupUseCase),
   acceptTosUseCase: asFunction(acceptTosUseCase),
-  generateImageUseCase: asFunction(generateImageUseCase)
+  generateImageUseCase: asFunction(generateImageUseCase),
+  uploadImageUseCase: asFunction(uploadImageUseCase),
+
+  uploadService: asFunction(uploadService),
+  aiService: asFunction(aiService),
+
+  userMapper: asFunction(userMapper)
 };
 
 type ContainerDefinition = Record<string, Resolver<unknown>>;

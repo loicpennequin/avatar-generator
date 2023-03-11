@@ -52,9 +52,9 @@ html.dark {
 
   --error: var(--red-5);
 
-  --disabled: var(--gray-9);
-  --disabled-hsl: var(--gray-9-hsl);
-  --text-disabled: var(--gray-7);
+  --disabled: var(--gray-8);
+  --disabled-hsl: var(--gray-8-hsl);
+  --text-disabled: var(--gray-6);
 
   --border-dimmed: hsl(var(--gray-0-hsl) / 0.2);
   --border: hsl(var(--gray-0-hsl) / 0.4);
