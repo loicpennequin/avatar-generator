@@ -7,6 +7,9 @@ export const imageRouter = router({
     .mutation(async ({ input, ctx }) => {
       const useCase = ctx.resolve('generateImageUseCase');
       const image = await useCase(input);
-      return image;
+
+      const mapper = ctx.resolve('imageMapper');
+
+      return mapper.toResponseDto(image);
     })
 });

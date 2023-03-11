@@ -13,8 +13,12 @@ export const uploadService = () => {
   });
 
   return {
+    getFullUrl(id: string) {
+      return `https://${runtimeConfig.awsS3Bucket}.s3.eu-west-3.amazonaws.com/${id}`;
+    },
+
     uploadImage: async (buffer: Buffer) => {
-      const objectId = `${nanoid(10)}.png`;
+      const objectId = nanoid(10);
 
       await client.send(
         new PutObjectCommand({

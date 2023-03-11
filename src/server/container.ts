@@ -12,15 +12,16 @@ import { H3Event } from 'h3';
 import { getServerSession } from '#auth';
 import { AsyncReturnType } from '~~/src/utils/types';
 
-import { signupUseCase } from './useCases/signup';
+import { signupUseCase } from '~/server/useCases/signup';
 import { getSessionUserUseCase } from '~/server/useCases/getSessionUser';
 import { signinUseCase } from '~/server/useCases/signin';
-import { acceptTosUseCase } from './useCases/acceptTos';
-import { generateImageUseCase } from './useCases/generateImage';
-import { uploadImageUseCase } from './useCases/uploadImage';
-import { uploadService } from './services/uploadService';
-import { aiService } from './services/aiService';
-import { userMapper } from './mappers/user';
+import { acceptTosUseCase } from '~/server/useCases/acceptTos';
+import { generateImageUseCase } from '~/server/useCases/generateImage';
+import { uploadImageUseCase } from '~/server/useCases/uploadImage';
+import { uploadService } from '~/server/services/uploadService';
+import { aiService } from '~/server/services/aiService';
+import { userMapper } from '~/server/mappers/user';
+import { imageMapper } from '~/server/mappers/image';
 
 const injectables = {
   db: asValue(db),
@@ -35,7 +36,8 @@ const injectables = {
   uploadService: asFunction(uploadService),
   aiService: asFunction(aiService),
 
-  userMapper: asFunction(userMapper)
+  userMapper: asFunction(userMapper),
+  imageMapper: asFunction(imageMapper)
 };
 
 type ContainerDefinition = Record<string, Resolver<unknown>>;
