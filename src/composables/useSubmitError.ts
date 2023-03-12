@@ -9,7 +9,6 @@ export const useSubmitError = (error: Ref<any>) => {
 
     const { httpStatus } = error.value.data;
     const { message } = error.value.shape;
-
     if (te(`errors.${httpStatus}`)) return t(`errors.${httpStatus}`);
     if (te(`errors.${message}`)) return t(`errors.${message}`);
 

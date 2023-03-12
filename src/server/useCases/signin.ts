@@ -1,25 +1,19 @@
-import { Db } from '../db';
 import { compareSync } from 'bcrypt';
+import { UserRepository } from '../services/userRepository';
 
 export type Credentials = {
   email: string;
   password: string;
 };
 
-type Deps = {
-  db: Db;
-};
+type Deps = { userRepository: UserRepository };
+
 export const signinUseCase =
-  ({ db }: Deps) =>
+  ({ userRepository }: Deps) =>
   async (credentials: Credentials) => {
-    const user = await db.user.findUnique({
-      where: { email: credentials.email },
-      include: {
-        accounts: {
-          select: { passwordHash: true },
-          where: { provider: 'credentials' }
-        }
-      }
+    const user = await userRepository.findByEmailWithAccountByProvider({
+      email: credentials.email,
+      provider: 'credentials'
     });
 
     if (!user || user.accounts.length === 0) return null;

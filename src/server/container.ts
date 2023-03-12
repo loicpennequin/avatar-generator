@@ -10,7 +10,7 @@ import { Session } from 'next-auth';
 import { db } from '~/server/db';
 import { H3Event } from 'h3';
 import { getServerSession } from '#auth';
-import { AsyncReturnType } from '~~/src/utils/types';
+import { AsyncReturnType, Nullable } from '~/utils/types';
 
 import { signupUseCase } from '~/server/useCases/signup';
 import { getSessionUserUseCase } from '~/server/useCases/getSessionUser';
@@ -18,10 +18,12 @@ import { signinUseCase } from '~/server/useCases/signin';
 import { acceptTosUseCase } from '~/server/useCases/acceptTos';
 import { generateImageUseCase } from '~/server/useCases/generateImage';
 import { uploadImageUseCase } from '~/server/useCases/uploadImage';
-import { uploadService } from '~/server/services/uploadService';
+import { uploadService } from '~~/src/server/services/uploadService';
 import { aiService } from '~/server/services/aiService';
 import { userMapper } from '~/server/mappers/user';
 import { imageMapper } from '~/server/mappers/image';
+import { userRepository } from './services/userRepository';
+import { imageRepository } from './services/imageRepository';
 
 const injectables = {
   db: asValue(db),
@@ -33,11 +35,15 @@ const injectables = {
   generateImageUseCase: asFunction(generateImageUseCase),
   uploadImageUseCase: asFunction(uploadImageUseCase),
 
+  userRepository: asFunction(userRepository),
+  imageRepository: asFunction(imageRepository),
   uploadService: asFunction(uploadService),
   aiService: asFunction(aiService),
 
   userMapper: asFunction(userMapper),
-  imageMapper: asFunction(imageMapper)
+  imageMapper: asFunction(imageMapper),
+
+  session: asValue(null as Nullable<Session>)
 };
 
 type ContainerDefinition = Record<string, Resolver<unknown>>;

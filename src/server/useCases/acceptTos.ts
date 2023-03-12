@@ -1,17 +1,12 @@
 import { Session } from 'next-auth';
-import { Db } from '../db';
+import { UserRepository } from '../services/userRepository';
 
-type Deps = { db: Db; session: Session };
+type Deps = { session: Session; userRepository: UserRepository };
 
 export const acceptTosUseCase =
-  ({ db, session }: Deps) =>
+  ({ session, userRepository }: Deps) =>
   () => {
-    return db.user.update({
-      where: { id: session.user.id },
-      data: {
-        tosAcceptedAt: new Date()
-      }
-    });
+    return userRepository.acceptTos({ userId: session.user.id });
   };
 
 export type AcceptTosUseCase = ReturnType<typeof acceptTosUseCase>;

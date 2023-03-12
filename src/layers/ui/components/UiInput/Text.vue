@@ -118,6 +118,7 @@ const vModel = useVModel(props, 'modelValue', emit);
     padding-inline: var(--size-3);
     padding-block: var(--size-2);
     min-width: 0;
+    cursor: text;
 
     &:disabled {
       cursor: not-allowed;

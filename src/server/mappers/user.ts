@@ -12,6 +12,7 @@ export const userMapper = ({ session }: Deps) => {
         id: user.id,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
+        tosAcceptedAt: user.tosAcceptedAt,
         image: user.image,
         email: forceSelf || session.user.id === user.id ? user.email : undefined
       };

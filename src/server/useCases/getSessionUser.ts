@@ -1,12 +1,10 @@
-import { Db } from '../db';
+import { UserRepository } from '../services/userRepository';
 
-type Deps = { db: Db };
+type Deps = { userRepository: UserRepository };
 
 export const getSessionUserUseCase =
-  ({ db }: Deps) =>
+  ({ userRepository }: Deps) =>
   (email: string) =>
-    db.user.findUnique({
-      where: { email }
-    });
+    userRepository.findByEmail({ email });
 
 export type GetSessionUseCase = ReturnType<typeof getSessionUserUseCase>;

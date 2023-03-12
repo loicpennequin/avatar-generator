@@ -32,12 +32,15 @@ const slotProps = computed(() => ({
   </fieldset>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .ui-form-control {
   border: none;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: var(--size-2);
+  & > legend {
+    float: left;
+  }
 }
 </style>

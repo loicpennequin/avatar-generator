@@ -45,6 +45,7 @@ model User {
   emailVerified  DateTime?
   image          String?
   tosAcceptedAt  DateTime?
+  credits        Int              @default(10)
   accounts       Account[]
   sessions       Session[]
   GeneratedImage GeneratedImage[]

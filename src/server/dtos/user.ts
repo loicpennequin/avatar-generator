@@ -6,7 +6,8 @@ export const userResponseDto = z
     createdAt: z.date(),
     updatedAt: z.date().nullable(),
     email: z.string().nullable().optional(),
-    image: z.string().nullable()
+    image: z.string().nullable(),
+    tosAcceptedAt: z.date().nullable()
   })
   .strict();
 export type UserResponseDto = z.infer<typeof userResponseDto>;

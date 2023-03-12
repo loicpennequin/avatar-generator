@@ -21,3 +21,8 @@ db.$use(async (params, next) => {
 });
 
 export type Db = PrismaClient;
+
+export type DbTransaction = Omit<
+  Db,
+  '$on' | '$connect' | '$disconnect' | '$use' | '$transaction'
+>;

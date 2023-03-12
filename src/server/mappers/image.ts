@@ -1,7 +1,7 @@
 import { GeneratedImage } from '@prisma/client';
 import { Session } from 'next-auth';
 import { ImageResponseDto } from '~/server/dtos/image';
-import { UploadService } from '~/server/services/uploadService';
+import { UploadService } from '~~/src/server/services/uploadService';
 
 type Deps = { session: Session; uploadService: UploadService };
 

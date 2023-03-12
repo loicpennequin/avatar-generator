@@ -7,9 +7,9 @@ export const userRouter = router({
     .output(userResponseDto)
     .mutation(async ({ input, ctx }) => {
       const useCase = ctx.resolve('signupUseCase');
-      const user = await useCase(input);
-
       const mapper = ctx.resolve('userMapper');
+
+      const user = await useCase(input);
 
       return mapper.toResponseDto(user);
     }),
@@ -18,9 +18,9 @@ export const userRouter = router({
     .output(userResponseDto)
     .mutation(async ({ ctx }) => {
       const useCase = ctx.resolve('acceptTosUseCase');
-      const user = await useCase();
-
       const mapper = ctx.resolve('userMapper');
+
+      const user = await useCase();
 
       return mapper.toResponseDto(user);
     })

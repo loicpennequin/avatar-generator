@@ -18,7 +18,7 @@ export const uploadService = () => {
     },
 
     uploadImage: async (buffer: Buffer) => {
-      const objectId = nanoid(10);
+      const objectId = `${nanoid(10)}.png`;
 
       await client.send(
         new PutObjectCommand({

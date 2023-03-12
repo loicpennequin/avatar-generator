@@ -1,24 +1,15 @@
-import { Db } from '~/server/db';
 import { hashSync } from 'bcrypt';
-import { SignupDto } from '../dtos/user';
-type Deps = { db: Db };
+import { SignupDto } from '~/server/dtos/user';
+import { UserRepository } from '~/server/services/userRepository';
+
+type Deps = { userRepository: UserRepository };
 
 export const signupUseCase =
-  ({ db }: Deps) =>
+  ({ userRepository }: Deps) =>
   async (dto: SignupDto) => {
-    const user = await db.user.create({
-      data: {
-        email: dto.email,
-        tosAcceptedAt: new Date(),
-        accounts: {
-          create: {
-            type: 'credentials',
-            provider: 'credentials',
-            providerAccountId: '',
-            passwordHash: hashSync(dto.password, 10)
-          }
-        }
-      }
+    const user = await userRepository.create({
+      email: dto.email,
+      passwordHash: hashSync(dto.password, 10)
     });
 
     return user;
