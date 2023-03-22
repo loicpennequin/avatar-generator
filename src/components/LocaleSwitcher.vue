@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{ showLabel?: boolean }>();
+
 const switchLocalePath = useSwitchLocalePath();
 const { t, locale, locales } = useI18n();
 const availableLocales = computed(

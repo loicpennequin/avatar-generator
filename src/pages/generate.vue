@@ -6,6 +6,8 @@ import { GenerateImageDto, generateImageDto } from '../server/dtos/image';
 definePageMeta({ middleware: 'auth' });
 
 const { t } = useI18n();
+const { getSession } = useSession();
+
 const { handleSubmit } = useForm<GenerateImageDto>({
   validationSchema: toFormValidator(generateImageDto)
 });
@@ -20,6 +22,7 @@ const {
   error
 } = useMutation(['generateImage'], client.image.generate.mutate, {
   onSuccess(data) {
+    getSession();
     url.value = data.url;
   }
 });
@@ -33,42 +36,42 @@ const submitErrorMessage = useSubmitError(error);
 const colors = [
   {
     value: 'red',
-    color: '0 73% 53%',
+    color: '0 60% 56%',
     text: '#fff'
   },
   {
     value: 'blue',
-    color: '230 76% 48%',
+    color: '230 70% 50%',
     text: '#fff'
   },
   {
     value: 'green',
-    color: '123 76% 48%',
+    color: '123 66% 58%',
     text: '#000'
   },
   {
     value: 'yellow',
-    color: '59 87% 52%',
+    color: '59 82% 52%',
     text: '#000'
   },
   {
     value: 'orange',
-    color: '30 87% 45%',
-    text: '#fff'
+    color: '30 80% 55%',
+    text: '#000'
   },
   {
     value: 'pink',
-    color: '310 96% 65%',
+    color: '310 80% 65%',
     text: '#000'
   },
   {
     value: 'purple',
-    color: '271 85% 46%',
+    color: '271 70% 46%',
     text: '#fff'
   },
   {
     value: 'teal',
-    color: '183 79% 47%',
+    color: '183 70% 50%',
     text: '#000'
   },
   {
@@ -87,66 +90,80 @@ const artStyles = ['anime', 'comics', 'realistic', 'cartoon'];
 </script>
 
 <template>
-  <UiContainer size="sm">
-    <UiSurface as="form" @submit.prevent="onSubmit">
-      <h2>{{ t('title') }}</h2>
-      <UiFormControl
-        id="generate-prompt"
-        v-slot="slotProps"
-        name="prompt"
-        :label="t('labels.prompt')"
-      >
-        <UiInputText v-bind="slotProps" />
-      </UiFormControl>
-
-      <UiFormControl
-        id="generate-color"
-        v-slot="slotProps"
-        name="color"
-        :label="t('labels.color')"
-        is-group
-      >
-        <div class="colors-grid">
-          <UiInputRadio
-            v-for="color in colors"
-            v-bind="slotProps"
-            :id="`generate-color-${color.value}`"
-            :key="color.value"
-            :value="color.value"
-            :style="{ '--color': color.color, '--text-color': color.text }"
-          >
-            {{ t(`colors.${color.value}`) }}
-          </UiInputRadio>
-        </div>
-      </UiFormControl>
-
-      <UiFormControl
-        id="generate-style"
-        v-slot="slotProps"
-        name="style"
-        :label="t('labels.style')"
-        is-group
-      >
-        <UiInputRadio
-          v-for="style in artStyles"
-          v-bind="slotProps"
-          :id="`${slotProps.id}-${style}`"
-          :key="style"
-          :value="style"
+  <UiCenter>
+    <UiSurface as="section">
+      <form as="form" @submit.prevent="onSubmit">
+        <h2>{{ t('title') }}</h2>
+        <UiFormControl
+          id="generate-prompt"
+          v-slot="slotProps"
+          name="prompt"
+          :label="t('labels.prompt')"
         >
-          {{ t(`artStyles.${style}`) }}
-        </UiInputRadio>
-      </UiFormControl>
+          <UiInputText v-bind="slotProps" />
+        </UiFormControl>
 
-      <UiButton :is-loading="isLoading">Generate</UiButton>
-      <UiFormError v-if="error" :error="submitErrorMessage" />
+        <UiFormControl
+          id="generate-color"
+          v-slot="slotProps"
+          name="color"
+          :label="t('labels.color')"
+          is-group
+        >
+          <div class="colors-grid">
+            <UiInputRadio
+              v-for="color in colors"
+              v-bind="slotProps"
+              :id="`generate-color-${color.value}`"
+              :key="color.value"
+              :value="color.value"
+              :style="{ '--color': color.color, '--text-color': color.text }"
+            >
+              {{ t(`colors.${color.value}`) }}
+            </UiInputRadio>
+          </div>
+        </UiFormControl>
 
+        <UiFormControl
+          id="generate-style"
+          v-slot="slotProps"
+          name="style"
+          :label="t('labels.style')"
+          is-group
+        >
+          <UiInputRadio
+            v-for="style in artStyles"
+            v-bind="slotProps"
+            :id="`${slotProps.id}-${style}`"
+            :key="style"
+            :value="style"
+          >
+            {{ t(`artStyles.${style}`) }}
+          </UiInputRadio>
+        </UiFormControl>
+
+        <UiButton :is-loading="isLoading">
+          Generate ( 1
+          <Icon name="fa6-solid:gem" />
+          )
+        </UiButton>
+        <UiFormError v-if="error" :error="submitErrorMessage" />
+      </form>
       <img v-if="url" :src="url" alt="your generated image" />
+      <div v-else class="no-image">
+        <Icon name="ph:image-square-fill" />
+        {{ t('empty') }}
+      </div>
     </UiSurface>
-  </UiContainer>
+  </UiCenter>
 </template>
 
 <style scoped lang="postcss">
+section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--size-4);
+}
 form {
   display: flex;
   flex-direction: column;
@@ -157,10 +174,21 @@ form {
 
 img {
   display: block;
-  max-width: 100%;
+  max-width: var(--size-sm);
   height: auto;
 }
 
+.no-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--size-4);
+
+  & > .icon {
+    font-size: var(--font-size-8);
+  }
+}
 .colors-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--size-9), 1fr));
@@ -210,6 +238,7 @@ img {
 {
   "en": {
     "title": "Generate your Avatar",
+    "empty": "Once generated, your image will appear here.",
     "labels": {
       "prompt": "Describe your avatar",
       "color": "Choose a dominant color",
@@ -240,6 +269,7 @@ img {
   },
   "fr": {
     "title": "Génerer votre avatar",
+    "empty": "Une fois générées, votre image apparaitra ici.",
     "labels": {
       "prompt": "Décrivez votre avatar",
       "color": "Choisissez une couleur principale",

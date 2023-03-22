@@ -1,6 +1,7 @@
 {
   "errors": {
-    "500": "An error has occured"
+    "500": "An error has occured",
+    "NOT_ENOUGH_CREDITS": "Sorry, you don't have enough credits."
   },
 
   "zod:errors": {

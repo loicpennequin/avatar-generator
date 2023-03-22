@@ -26,7 +26,7 @@ const { t } = useI18n();
 <template>
   <UiInputSwitch v-if="props.isSwitch" id="dark-mode-switch" v-model="vModel">
     <template #on><Icon name="ph:moon-fill" class="icon" /></template>
-    <template #off><Icon name="ph:sun-fill" /></template>
+    <template #off><Icon name="ph:sun-fill" class="icon" /></template>
   </UiInputSwitch>
   <UiIconButton
     v-else
@@ -38,7 +38,7 @@ const { t } = useI18n();
 
 <style scoped lang="postcss">
 .icon {
-  font-size: var(--font-size-4);
+  font-size: var(--font-size-3);
 }
 </style>
 

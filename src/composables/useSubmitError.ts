@@ -9,11 +9,12 @@ export const useSubmitError = (error: Ref<any>) => {
 
     const { httpStatus } = error.value.data;
     const { message } = error.value.shape;
-    if (te(`errors.${httpStatus}`)) return t(`errors.${httpStatus}`);
-    if (te(`errors.${message}`)) return t(`errors.${message}`);
 
-    if (gte(`errors.${httpStatus}`)) return gt(`errors.${httpStatus}`);
+    if (te(`errors.${message}`)) return t(`errors.${message}`);
     if (gte(`errors.${message}`)) return gt(`errors.${message}`);
+
+    if (te(`errors.${httpStatus}`)) return t(`errors.${httpStatus}`);
+    if (gte(`errors.${httpStatus}`)) return gt(`errors.${httpStatus}`);
 
     if (te(`errors.500`)) return t(`errors.500`);
 

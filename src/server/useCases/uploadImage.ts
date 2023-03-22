@@ -11,7 +11,7 @@ export const uploadImageUseCase =
 
     const buffer = Buffer.from(arrayBuffer);
     const miniatureBuffer = await sharp(Buffer.from(arrayBuffer))
-      .resize({ width: 200 })
+      .resize({ width: 400 })
       .toBuffer();
 
     return Promise.all([

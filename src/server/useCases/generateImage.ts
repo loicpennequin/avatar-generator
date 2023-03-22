@@ -26,25 +26,24 @@ export const generateImageUseCase =
     uploadImageUseCase
   }: Deps) =>
   (dto: GenerateImageDto) => {
-    return db.$transaction(async (tx) => {
-      const { prompt, color, style } = dto;
-      const user = await userRepository.removeCredits(
-        { userId: session.user.id, amount: 1 },
-        tx
-      );
+    return db.$transaction(
+      async (tx) => {
+        const sessionId = session.user.id;
+        const user = await userRepository.removeCredits(
+          { userId: sessionId, amount: 1 },
+          tx
+        );
 
-      if (user.credits < 0) {
-        throw new Error(errorMessages.NOT_ANOUGH_CREDITS);
-      }
+        if (user.credits < 0) {
+          throw new Error(errorMessages.NOT_ENOUGH_CREDITS);
+        }
 
-      const imageURL = await aiService.generateImage({ prompt, color, style });
-      const [url, miniatureUrl] = await uploadImageUseCase(imageURL);
+        const imageURL = await aiService.generateImage(dto);
+        const [url, miniatureUrl] = await uploadImageUseCase(imageURL);
 
-      return imageRepository.create({
-        ownerId: session.user.id,
-        url,
-        miniatureUrl,
-        ...dto
-      });
-    });
+        const image = { ownerId: sessionId, url, miniatureUrl, ...dto };
+        return imageRepository.create(image, tx);
+      },
+      { timeout: 30_000 }
+    );
   };

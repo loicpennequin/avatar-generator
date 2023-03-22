@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data } = await useSession();
+const { data: session } = await useSession();
 
 const localePath = useLocalePath();
 const { t } = useI18n();
@@ -12,9 +12,11 @@ const { t } = useI18n();
 
   <nav class="desktop-nav">
     <ul>
-      <template v-if="data?.user">
+      <template v-if="session?.user">
         <li>
-          <UiButton>{{ t('buy') }}</UiButton>
+          <UiButton left-icon="fa6-solid:gem">
+            {{ t('buy', session.user.credits!) }}
+          </UiButton>
         </li>
         <li>
           <UserDropdown />
@@ -35,10 +37,10 @@ const { t } = useI18n();
           </UiButton>
         </li>
         <li>
-          <DarkModeToggle />
+          <DarkModeToggle is-switch />
         </li>
         <li>
-          <LocaleSwitcher />
+          <LocaleSwitcher show-label />
         </li>
       </template>
     </ul>
@@ -73,12 +75,12 @@ ul {
   "en": {
     "signup": "Get Started",
     "signin": "Sign in",
-    "buy": "Add credits"
+    "buy": "no credit | 1 credit | {count} credits"
   },
   "fr": {
     "signup": "Inscription",
     "signin": "Connexion",
-    "buy": "Ajouter des crédits"
+    "buy": "no crédit | 1 credit | {count} credits"
   }
 }
 </i18n>

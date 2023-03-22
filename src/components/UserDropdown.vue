@@ -40,7 +40,7 @@ const isOpened = ref(false);
         :close-on-click="false"
       >
         Theme
-        <DarkModeToggle />
+        <DarkModeToggle is-switch />
       </UiDropdownItem>
     </template>
   </UiDropdown>

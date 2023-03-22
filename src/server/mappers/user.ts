@@ -8,13 +8,15 @@ export const userMapper = ({ session }: Deps) => {
   return {
     toResponseDto(user: User, { forceSelf = false } = {}): UserResponseDto {
       // forceSelf is used when mapping the session user in a context where the server session is unavailable
+      const isSelf = forceSelf || session.user.id === user.id;
       return {
         id: user.id,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         tosAcceptedAt: user.tosAcceptedAt,
         image: user.image,
-        email: forceSelf || session.user.id === user.id ? user.email : undefined
+        email: isSelf ? user.email : undefined,
+        credits: isSelf ? user.credits : undefined
       };
     }
   };
